@@ -1,13 +1,17 @@
-.container{
-    display: flex;
-
-}
 .current-weather{
     flex: 1;
     justify-content: right;
 }
 
-.h1{
-    background-color: blue;
-    color: white;
+
+.h5{
+    background-color: lightskyblue;
 }
+.jumbotron{
+    justify-content: center;
+}
+
+.li{
+    list-style: none;
+}
+
