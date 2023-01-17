@@ -15,7 +15,6 @@ var fiveDay = document.getElementById("five-day");
 var currentWeatherEl = document.getElementById("current-weather");
 
 function storeCities() {
-  var prevCity = document.getElementById("city");
   localStorage.setItem("city", city.value);
 }
 
@@ -38,12 +37,9 @@ function getCurrent(e) {
       displayCurrent(data);
       //get forecast
       getForecast(data);
-
-      //save data
       //create button
       makeBtn(data);
       storeCities();
-      //hxBtns();
     });
 }
 //this displays the weather now
@@ -54,9 +50,15 @@ function displayCurrent(data) {
   nameEl.textContent = data.name;
   const tempEl = document.createElement("h4");
   tempEl.textContent = data.main.temp + " °F";
+  const windEl = document.createElement("h4");
+  windEl.textContent = "Wind Speed: " + data.wind.speed + " mph";
+  const humidEl = document.createElement("h4");
+  humidEl.textContent = data.weather[0].description;
 
   currentWeatherEl.appendChild(nameEl);
   currentWeatherEl.appendChild(tempEl);
+  currentWeatherEl.appendChild(windEl);
+  currentWeatherEl.appendChild(humidEl);
 }
 
 //this makes the btn for the city entered
@@ -64,10 +66,15 @@ function makeBtn(data) {
   var cityBtn = document.createElement("button");
   cityBtn.textContent = data.name;
   historyEl.appendChild(cityBtn);
+  cityBtn.addEventListener("click", getCurrent(data));
 }
+
 //this isn't working, but you want it to click the button to search
 function useBtn(d) {
+  cityBtn.addEventListener("click", useBtn());
   console.log("ive been clicked");
+  var prevCity = document.getElementById("button");
+  getCurrent(prevCity);
 }
 
 //function hxBtns() {
@@ -99,16 +106,16 @@ function displayForecast(data) {
     //const next5daysDate = document.createElement("h3");
     //next5daysDate.textContent = data.list[i].dt_txt;
     //fiveDay.appendChild(next5daysDate);
-    const next5days = document.createElement("h5");
+    const next5days = document.createElement("h4");
     next5days.textContent = "Day " + i + ": " + data.list[i].main.temp + " °F";
     fiveDay.appendChild(next5days);
     const next5daysWind = document.createElement("h5");
     next5daysWind.textContent =
       "Wind Speed: " + data.list[i].wind.speed + " mph";
-    fiveDay.appendChild(next5daysWind);
     const next5daysHumid = document.createElement("h5");
     next5daysHumid.textContent =
       "Humidity: " + data.list[i].main.humidity + "%";
+    fiveDay.appendChild(next5daysWind);
     fiveDay.appendChild(next5daysHumid);
     //const next5daysIcon = document.createElement("h5");
     //let locationIcon = document.querySelector(".weather-icon");
@@ -119,24 +126,12 @@ function displayForecast(data) {
   }
 }
 
-var getOlderWeather;
-
-var formSubmitHandler = function (event) {
-  event.preventDefault();
-  var currentCity = city.value.trim();
-  if (currentCity) {
-    getWeather(currentCity);
-
-    //currentEl.textContent = '';
-  }
-};
-
-//function saveTask() {
-//     localStorage.setItem("city", JSON.stringify(data));
-//  }
-
 // sets any data in localStorage to the view
 // saveTask();
 
 document.querySelector("#enter").addEventListener("click", getCurrent);
-//cityBtn.addEventListener("click", useBtn);
+
+function init() {
+  localStorage.getItem(city);
+}
+init(city);

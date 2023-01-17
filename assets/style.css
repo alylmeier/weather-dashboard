@@ -4,14 +4,13 @@
 }
 
 
-.h5{
-    background-color: lightskyblue;
-}
+
+
 .jumbotron{
     justify-content: center;
 }
 
-.li{
-    list-style: none;
+.btmcontainer h5{
+    float: right;
+    display: inline-block;
 }
-
