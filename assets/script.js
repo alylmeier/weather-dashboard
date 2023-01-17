@@ -3,7 +3,7 @@ var APIkey = "fe226ea7cc2c3daa2d33569e66605787";
 var citySearch = document.getElementById("city");
 
 var ApiURL =
-  "http://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=" +
+  "https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=" +
   APIkey;
 
 var cityEl = document.querySelector("#city");
@@ -23,7 +23,7 @@ function getCurrent(e) {
   e.preventDefault();
   var city = cityEl.value;
   var queryURL =
-    "http://api.openweathermap.org/data/2.5/weather?q=" +
+    "https://api.openweathermap.org/data/2.5/weather?q=" +
     city +
     "&appid=" +
     APIkey +
@@ -86,7 +86,7 @@ function useBtn(d) {
 function getForecast(data) {
   var lat = data.coord.lat;
   var long = data.coord.lon;
-  var APIURL = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=${APIkey}&units=imperial`;
+  var APIURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=${APIkey}&units=imperial`;
 
   fetch(APIURL)
     .then(function (response) {
