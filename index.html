@@ -14,6 +14,7 @@
       integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U="
       crossorigin="anonymous"
     ></script>
+    <link rel="stylesheet" href="./assets/style.css" />
     <title>Weather Dashboard</title>
   </head>
   <body>
@@ -22,44 +23,42 @@
     >
       <h1 class="justify-content-center display-1">The Weather Dashboard</h1>
     </div>
-    <!--thiss make the initial search area-->
-    <div class ="container">
-      <div class="row">
-        <div class="col-4 justify-content-center pt-2">
-        
-          <h3 class="card-header text-uppercase">Search By City Name</h3>
-          <form id="user-form" class="card-body">
-            <label class="form-label" for="city">City</label>
-            <input
-              name="city"
-              id="city"
-              type="text"
-              autofocus="true"
-              class="form-input"
-            />
-            <button type="submit" id="enter" class="btn">Submit</button>
-          </form>
-        </div>
-        <!--this is where the current forecast displays-->
-        <div class="col-6" id="current-weather"></div>
-        </div>
-        <div class="btmcontainer">
+    <!--this make the initial search area-->
+
+    <div class="row">
+      <div class="col-md justify-content-center pt-2">
+        <h3 class="card-header text-uppercase">Search By City Name</h3>
+        <form id="user-form" class="card-body">
+          <label class="form-label" for="city">City</label>
+          <input
+            name="city"
+            id="city"
+            type="text"
+            autofocus="true"
+            class="form-input"
+          />
+          <button type="submit" id="enter" class="btn">Submit</button>
+        </form>
+      </div>
+      <!--this is where the current forecast displays-->
+
+      <div class="btmcontainer">
         <div class="row">
-          <div class = "col-4 justify-content-center pt-2">
-              <h3 class="card-header text-uppercase">Search By History</h3>
+          <div class="col-md justify-content-center pt-2">
+            <h3 class="card-header text-uppercase">Search By History</h3>
           </div>
-        <!--this is the history search area-->
-          <div class="col-5" id="five-day"></div>
+          <div class="col-md" id="previous-buttons"></div>
         </div>
-        <div class="row"></div>
-          <div class = "col-2" id="previous-buttons" ></div>
-      </container>
-      
+        <!--this is the history search area-->
+        <p></p>
+
+        <div id="current-weather"></div>
+        <p></p>
+        <p></p>
+      </div>
     </div>
 
-    <!--<div class="weather-icon"><img src="icons/unknown.png" /></div> -->
-
-    <script src="assets\script.js"></script>
-    <link rel="stylesheet" href="./assets/style.css"    />
+    <footer id="five-day"></footer>
   </body>
+  <script src="assets\script.js"></script>
 </html>

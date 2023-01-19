@@ -7,7 +7,6 @@ var ApiURL =
   APIkey;
 
 var cityEl = document.querySelector("#city");
-var currentEl = document.getElementById("current-weather");
 var historyEl = document.getElementById("previous-buttons");
 var weatherNow = JSON.parse(localStorage.getItem("data"));
 var btnEl = document.querySelector("#enter");
@@ -83,6 +82,7 @@ function displayCurrent(data) {
 function makeBtn(data) {
   var cityBtn = document.createElement("button");
   cityBtn.setAttribute("id", "city-button");
+  cityBtn.setAttribute("class", "btn btn-info");
   cityBtn.dataset.lat = data.lat;
   cityBtn.dataset.lon = data.lon;
   cityBtn.textContent = data.name;
@@ -127,16 +127,17 @@ function displayForecast(data) {
 
   //var dayCount = 6;
   for (var i = 3; i < data.list.length; i = i + 8) {
-    const next5daysDate = document.createElement("h3");
+    const next5daysDate = document.createElement("h2");
+    next5daysDate.setAttribute("class", "weatherblocks");
     next5daysDate.textContent = data.list[i].dt_txt;
     fiveDay.appendChild(next5daysDate);
-    const next5days = document.createElement("h4");
+    const next5days = document.createElement("p");
     next5days.textContent = data.list[i].main.temp + " °F";
     fiveDay.appendChild(next5days);
-    const next5daysWind = document.createElement("h5");
+    const next5daysWind = document.createElement("p");
     next5daysWind.textContent =
       "Wind Speed: " + data.list[i].wind.speed + " mph";
-    const next5daysHumid = document.createElement("h5");
+    const next5daysHumid = document.createElement("p");
     next5daysHumid.textContent =
       "Humidity: " + data.list[i].main.humidity + "%";
     fiveDay.appendChild(next5daysWind);
