@@ -15,78 +15,101 @@ var fiveDay = document.getElementById("five-day");
 var currentWeatherEl = document.getElementById("current-weather");
 
 function storeCities() {
-  localStorage.setItem("city", city.value);
+  var hxCities = [];
+  a = JSON.parse(localStorage.getItem("setCitiesArray")) || [];
+  a.push(data);
+  alert(citiesarray);
+  localStorage.setItem("setCitiesArray", JSON.stringify(citiesarray));
 }
 
-//this is one attempt to fetch from openweather
+// var hxCities = [];
+// a.push(JSON.parse(localStorage.getItem("setCitiesArray")));
+
+//this fetches from openweather
 function getCurrent(e) {
   e.preventDefault();
   var city = cityEl.value;
-  var queryURL =
-    "https://api.openweathermap.org/data/2.5/weather?q=" +
+  var url =
+    "http://api.openweathermap.org/geo/1.0/direct?q=" +
     city +
     "&appid=" +
-    APIkey +
-    "&units=imperial";
-  fetch(queryURL)
-    .then(function (response) {
+    APIkey;
+  fetch(url)
+    .then((response) => {
       return response.json();
     })
-    .then(function (data) {
-      //display current weather
-      displayCurrent(data);
-      //get forecast
-      getForecast(data);
-      //create button
-      makeBtn(data);
-      storeCities();
+    .then((data) => {
+      console.log(data);
+      var city = {
+        name: data[0].name,
+        lat: data[0].lat,
+        lon: data[0].lon,
+      };
+      console.log(city);
+      displayCurrent(city);
+      getForecast(city);
+      makeBtn(city);
+      storeCities(city);
     });
 }
 //this displays the weather now
 function displayCurrent(data) {
-  console.log(data);
-  currentWeatherEl.innerHTML = "";
-  const nameEl = document.createElement("h2");
-  nameEl.textContent = data.name;
-  const tempEl = document.createElement("h4");
-  tempEl.textContent = data.main.temp + " °F";
-  const windEl = document.createElement("h4");
-  windEl.textContent = "Wind Speed: " + data.wind.speed + " mph";
-  const humidEl = document.createElement("h4");
-  humidEl.textContent = data.weather[0].description;
+  var url = `https://api.openweathermap.org/data/2.5/weather?lat=${data.lat}&lon=${data.lon}&units=imperial&appid=${APIkey}`;
+  fetch(url)
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      console.log(data);
+      currentWeatherEl.innerHTML = "";
+      const nameEl = document.createElement("h2");
+      nameEl.textContent = data.name;
+      const tempEl = document.createElement("h4");
+      tempEl.textContent = data.main.temp + " °F";
+      const windEl = document.createElement("h4");
+      windEl.textContent = "Wind Speed: " + data.wind.speed + " mph";
+      const humidEl = document.createElement("h4");
+      humidEl.textContent = data.weather[0].description;
 
-  currentWeatherEl.appendChild(nameEl);
-  currentWeatherEl.appendChild(tempEl);
-  currentWeatherEl.appendChild(windEl);
-  currentWeatherEl.appendChild(humidEl);
+      currentWeatherEl.appendChild(nameEl);
+      currentWeatherEl.appendChild(tempEl);
+      currentWeatherEl.appendChild(windEl);
+      currentWeatherEl.appendChild(humidEl);
+    });
 }
 
 //this makes the btn for the city entered
+
 function makeBtn(data) {
   var cityBtn = document.createElement("button");
+  cityBtn.setAttribute("id", "city-button");
+  cityBtn.dataset.lat = data.lat;
+  cityBtn.dataset.lon = data.lon;
   cityBtn.textContent = data.name;
   historyEl.appendChild(cityBtn);
-  cityBtn.addEventListener("click", getCurrent(data));
 }
 
 //this isn't working, but you want it to click the button to search
-function useBtn(d) {
-  cityBtn.addEventListener("click", useBtn());
-  console.log("ive been clicked");
-  var prevCity = document.getElementById("button");
-  getCurrent(prevCity);
-}
+function useBtn(e) {
+  console.log(e);
+  //GUARD STATEMENT
+  if (!e.target.matches("button")) {
+    return;
+  }
 
-//function hxBtns() {
-//localStorage.getItem(city);
-//.then(makeBtn)
-//}
+  var hxCityEl = e.target;
+  var city = {
+    name: hxCityEl.textContent,
+    lat: hxCityEl.dataset.lat,
+    lon: hxCityEl.dataset.lon,
+  };
+  displayCurrent(city);
+  getForecast(city);
+}
 
 //this does the second API call to get future data
 function getForecast(data) {
-  var lat = data.coord.lat;
-  var long = data.coord.lon;
-  var APIURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=${APIkey}&units=imperial`;
+  var APIURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${data.lat}&lon=${data.lon}&appid=${APIkey}&units=imperial`;
 
   fetch(APIURL)
     .then(function (response) {
@@ -97,17 +120,18 @@ function getForecast(data) {
     });
 }
 
+//this displays the "forecast"
 function displayForecast(data) {
   console.log(data);
   fiveDay.innerHTML = "";
-  var dayCount = 6;
-  for (var i = 1; i < dayCount; i++) {
-    //this is also not working; you couldn't get the for loop to pull different increments
-    //const next5daysDate = document.createElement("h3");
-    //next5daysDate.textContent = data.list[i].dt_txt;
-    //fiveDay.appendChild(next5daysDate);
+
+  //var dayCount = 6;
+  for (var i = 3; i < data.list.length; i = i + 8) {
+    const next5daysDate = document.createElement("h3");
+    next5daysDate.textContent = data.list[i].dt_txt;
+    fiveDay.appendChild(next5daysDate);
     const next5days = document.createElement("h4");
-    next5days.textContent = "Day " + i + ": " + data.list[i].main.temp + " °F";
+    next5days.textContent = data.list[i].main.temp + " °F";
     fiveDay.appendChild(next5days);
     const next5daysWind = document.createElement("h5");
     next5daysWind.textContent =
@@ -130,8 +154,9 @@ function displayForecast(data) {
 // saveTask();
 
 document.querySelector("#enter").addEventListener("click", getCurrent);
+document.querySelector("#previous-buttons").addEventListener("click", useBtn);
 
 function init() {
-  localStorage.getItem(city);
+  var allCities = localStorage.getItem(city);
 }
-init(city);
+init();
