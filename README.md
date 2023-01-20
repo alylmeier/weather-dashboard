@@ -22,4 +22,4 @@ Please refer to the LICENSE in the repo.
 https://alylmeier.github.io/weather-dashboard/
 
 # module-4-challenge
-![generatormockup](https://github.com/alylmeier/day-planner/blob/main/day%20planner.png)
+![generatormockup]((https://github.com/alylmeier/weather-dashboard/blob/main/assets/Screenshot%202023-01-20%20164328.png)
