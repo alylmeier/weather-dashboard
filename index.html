@@ -23,42 +23,35 @@
     >
       <h1 class="justify-content-center display-1">The Weather Dashboard</h1>
     </div>
-    <!--this make the initial search area-->
 
-    <div class="row">
-      <div class="col-md justify-content-center pt-2">
-        <h3 class="card-header text-uppercase">Search By City Name</h3>
-        <form id="user-form" class="card-body">
-          <label class="form-label" for="city">City</label>
-          <input
-            name="city"
-            id="city"
-            type="text"
-            autofocus="true"
-            class="form-input"
-          />
-          <button type="submit" id="enter" class="btn">Submit</button>
-        </form>
-      </div>
-      <!--this is where the current forecast displays-->
-
-      <div class="btmcontainer">
-        <div class="row">
-          <div class="col-md justify-content-center pt-2">
-            <h3 class="card-header text-uppercase">Search By History</h3>
-          </div>
-          <div class="col-md" id="previous-buttons"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h3 class="card-header text-uppercase">Search By City Name</h3>
+          <form id="user-form" class="card-body">
+            <label class="form-label" for="city">City</label>
+            <input
+              name="city"
+              id="city"
+              type="text"
+              autofocus="true"
+              class="form-input"
+            />
+            <button type="submit" id="enter" class="btn">Submit</button>
+          </form>
         </div>
-        <!--this is the history search area-->
-        <p></p>
-
-        <div id="current-weather"></div>
-        <p></p>
-        <p></p>
+        <div class="col">
+          <h3 class="card-header text-uppercase">Search By History</h3>
+        </div>
+        <div class="col" id="previous-buttons"></div>
       </div>
     </div>
-
-    <footer id="five-day"></footer>
+    <div class="row">
+      <div class="col-1" id="justtakingupsomespace"></div>
+      <div class="col-4" id="current-weather"></div>
+      <div class="col-3" id="five-day"></div>
+    </div>
+    <!--this makes the initial search area-->
   </body>
   <script src="assets\script.js"></script>
 </html>

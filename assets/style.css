@@ -1,14 +1,5 @@
-.current-weather{
-    flex: 1;
-    justify-content: right;
-    margin-top: 300 px !important;
-}
-
 .jumbotron{
     justify-content: center;
-}
-.h2{
-    background-color: darkblue !important;
 }
 
 
@@ -18,21 +9,9 @@
     padding: 2rem 2rem;
     text-align: center;
   }
-.h2.weatherboxes{
-    display: inline-block;
-    border: 1px solid red;
-  padding: 1rem 1rem;
-  vertical-align: middle;
-  
-}
 
-footer{
-    background-color: blue;
-    color: white;
+  .lower-area{
+    border-top: 200px;
+  }
 
 
-}
-footer.h2{
-    display: inline-block;
-    margin: 10px, 10px, 10px, 10px;
-}

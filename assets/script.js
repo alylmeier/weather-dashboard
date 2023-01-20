@@ -29,7 +29,7 @@ function getCurrent(e) {
   e.preventDefault();
   var city = cityEl.value;
   var url =
-    "http://api.openweathermap.org/geo/1.0/direct?q=" +
+    "https://api.openweathermap.org/geo/1.0/direct?q=" +
     city +
     "&appid=" +
     APIkey;
@@ -61,7 +61,9 @@ function displayCurrent(data) {
     .then((data) => {
       console.log(data);
       currentWeatherEl.innerHTML = "";
-      const nameEl = document.createElement("h2");
+      const curEl = document.createElement("h2");
+      curEl.textContent = "Current Conditions";
+      const nameEl = document.createElement("h3");
       nameEl.textContent = data.name;
       const tempEl = document.createElement("h4");
       tempEl.textContent = data.main.temp + " °F";
@@ -69,7 +71,7 @@ function displayCurrent(data) {
       windEl.textContent = "Wind Speed: " + data.wind.speed + " mph";
       const humidEl = document.createElement("h4");
       humidEl.textContent = data.weather[0].description;
-
+      currentWeatherEl.appendChild(curEl);
       currentWeatherEl.appendChild(nameEl);
       currentWeatherEl.appendChild(tempEl);
       currentWeatherEl.appendChild(windEl);
@@ -124,30 +126,28 @@ function getForecast(data) {
 function displayForecast(data) {
   console.log(data);
   fiveDay.innerHTML = "";
+  const forEl = document.createElement("h2");
+  forEl.textContent = "The Next 5 Days";
+  fiveDay.appendChild(forEl);
 
   //var dayCount = 6;
   for (var i = 3; i < data.list.length; i = i + 8) {
-    const next5daysDate = document.createElement("h2");
-    next5daysDate.setAttribute("class", "weatherblocks");
+    const next5daysDate = document.createElement("h4");
+
     next5daysDate.textContent = data.list[i].dt_txt;
+
     fiveDay.appendChild(next5daysDate);
     const next5days = document.createElement("p");
-    next5days.textContent = data.list[i].main.temp + " °F";
+    next5days.textContent =
+      data.list[i].main.temp +
+      " °F " +
+      "Wind Speed: " +
+      data.list[i].wind.speed +
+      " mph " +
+      "Humidity: " +
+      data.list[i].main.humidity +
+      "%";
     fiveDay.appendChild(next5days);
-    const next5daysWind = document.createElement("p");
-    next5daysWind.textContent =
-      "Wind Speed: " + data.list[i].wind.speed + " mph";
-    const next5daysHumid = document.createElement("p");
-    next5daysHumid.textContent =
-      "Humidity: " + data.list[i].main.humidity + "%";
-    fiveDay.appendChild(next5daysWind);
-    fiveDay.appendChild(next5daysHumid);
-    //const next5daysIcon = document.createElement("h5");
-    //let locationIcon = document.querySelector(".weather-icon");
-    //const icon = data.list[i].weather[0].icon;
-    //locationIcon.innerHTML = `<img src="icons/${icon}.png">;`;
-    //next5daysIcon.textContent = data.list[i].weather[0].icon + "@2x.png";
-    //fiveDay.appendChild(next5daysIcon);
   }
 }
 
